@@ -1,0 +1,148 @@
+(()=>{
+"use strict";
+const HEROES=[
+{id:"red",name:"Красный демон",kind:"ДЕМОН",desc:"Неумолимый охотник из главного коридора"},
+{id:"ghost",name:"Белый призрак",kind:"ПРИЗРАК",desc:"Бесшумно проходит через архив и шахты"},
+{id:"skull",name:"Скелет",kind:"КОСТЯНОЙ СТРАЖ",desc:"Тяжёлый противник из кухни"},
+{id:"shadow",name:"Тень",kind:"ТЕНЕВОЙ ДВОЙНИК",desc:"Появляется там, где гаснет свет"},
+{id:"crawler",name:"Ползун",kind:"МУТАНТ-ТАРАКАН",desc:"Шестилапый таракан с длинными усами, панцирем и быстрым рывком по вентиляции"},
+{id:"wolf",name:"Лунный зверь",kind:"ЗВЕРЬ",desc:"Становится опаснее рядом с фонарём"},
+{id:"rust",name:"Ржавый охотник",kind:"МЕХАНИЧЕСКИЙ ОХОТНИК",desc:"Старый автоматон, который никогда не останавливается"},
+{id:"void",name:"Пустотник",kind:"ПАУК БЕЗДНЫ",desc:"Восьмилапый паук с множеством глаз, искажающий камеры и свет"}
+];
+const THEMES=[
+["classic","Классический","Исходный облик героя","#9c3127","#190504","#ff281c","free",0,"ОБЫЧНЫЙ","prime"],
+["inferno","Инферно","Лавовые трещины и огненное ядро","#ff4b16","#260200","#ff8a23","buy",120,"РЕДКИЙ","prime"],
+["frost","Ледяной кошмар","Ледяные шипы и холодное дыхание","#7ce8ff","#072236","#d8fbff","buy",180,"РЕДКИЙ","prime"],
+["toxic","Токсичный мутант","Кислотные резервуары и ядовитый туман","#92ff38","#122700","#c6ff5d","buy",260,"РЕДКИЙ","prime"],
+["royal","Король кошмара","Корона, броня и древние руны","#ffd45a","#3a2100","#fff0a5","buy",450,"ЭПИЧЕСКИЙ","prime"],
+["cyber","Кибер-охотник","Неоновая броня и энергетические кабели","#21e6ff","#06162a","#7ff5ff","buy",650,"ЭПИЧЕСКИЙ","prime"],
+["glitch","Ошибка 404","Разорванная цифровая оболочка","#ff43da","#061f22","#57fff1","buy",900,"ЭПИЧЕСКИЙ","prime"],
+["abyss","Бездна","Чёрная материя и живые тени","#9d45ff","#050008","#df5cff","buy",1300,"ЛЕГЕНДАРНЫЙ","prime"],
+["bloodmoon","Кровавая луна","Костяная броня и багровое сияние","#ff354b","#250008","#ff8290","buy",1800,"ЛЕГЕНДАРНЫЙ","prime"],
+["crystal","Кристальный титан","Гранёные пластины и кристалл в груди","#5ee7ff","#11204c","#a8f7ff","buy",2400,"ЛЕГЕНДАРНЫЙ","prime"],
+["phantom","Фантом","Полупрозрачное тело и призрачный дым","#e5ffff","#25323a","#ffffff","ad",0,"МИФИЧЕСКИЙ","prime"],
+["samurai","Проклятый самурай","Маска они и разорванные доспехи","#ff5757","#261018","#ffc15c","ad",0,"МИФИЧЕСКИЙ","prime"],
+["biomech","Биомеханика","Живые мышцы, металл и трубки","#d85d6f","#1b0710","#ff96a5","buy",4200,"МИФИЧЕСКИЙ","prime"],
+["storm","Повелитель бури","Молнии и электрический ореол","#78a9ff","#071327","#d4e3ff","buy",5200,"МИФИЧЕСКИЙ","prime"],
+["ancient","Древний страж","Каменные пластины и письмена","#b8a06c","#272014","#e9d99d","buy",6500,"ДРЕВНИЙ","prime"],
+["nightmare","Истинный кошмар","Дополнительные глаза и живая пасть","#ff174f","#180006","#ff5579","buy",8000,"ДРЕВНИЙ","prime"],
+["classic_omega","Классический: Омега","Исходный облик героя; предельная форма с тяжёлой бронёй","#9c3127","#190504","#ff281c","buy",0,"РЕДКИЙ","omega"],
+["inferno_omega","Инферно: Омега","Лавовые трещины и огненное ядро; предельная форма с тяжёлой бронёй","#ff4b16","#260200","#ff8a23","buy",582,"ЭПИЧЕСКИЙ","omega"],
+["frost_omega","Ледяной кошмар: Омега","Ледяные шипы и холодное дыхание; предельная форма с тяжёлой бронёй","#7ce8ff","#072236","#d8fbff","buy",873,"ЭПИЧЕСКИЙ","omega"],
+["toxic_omega","Токсичный мутант: Омега","Кислотные резервуары и ядовитый туман; предельная форма с тяжёлой бронёй","#92ff38","#122700","#c6ff5d","buy",1191,"ЭПИЧЕСКИЙ","omega"],
+["royal_omega","Король кошмара: Омега","Корона, броня и древние руны; предельная форма с тяжёлой бронёй","#ffd45a","#3a2100","#fff0a5","buy",1657,"ЛЕГЕНДАРНЫЙ","omega"],
+["cyber_omega","Кибер-охотник: Омега","Неоновая броня и энергетические кабели; предельная форма с тяжёлой бронёй","#21e6ff","#06162a","#7ff5ff","buy",2137,"ЛЕГЕНДАРНЫЙ","omega"],
+["glitch_omega","Ошибка 404: Омега","Разорванная цифровая оболочка; предельная форма с тяжёлой бронёй","#ff43da","#061f22","#57fff1","buy",2685,"ЛЕГЕНДАРНЫЙ","omega"],
+["abyss_omega","Бездна: Омега","Чёрная материя и живые тени; предельная форма с тяжёлой бронёй","#9d45ff","#050008","#df5cff","buy",3435,"МИФИЧЕСКИЙ","omega"],
+["bloodmoon_omega","Кровавая луна: Омега","Костяная броня и багровое сияние; предельная форма с тяжёлой бронёй","#ff354b","#250008","#ff8290","buy",4320,"МИФИЧЕСКИЙ","omega"],
+["crystal_omega","Кристальный титан: Омега","Гранёные пластины и кристалл в груди; предельная форма с тяжёлой бронёй","#5ee7ff","#11204c","#a8f7ff","buy",5340,"МИФИЧЕСКИЙ","omega"],
+["phantom_omega","Фантом: Омега","Полупрозрачное тело и призрачный дым; предельная форма с тяжёлой бронёй","#e5ffff","#25323a","#ffffff","ad",2445,"ДРЕВНИЙ","omega"],
+["samurai_omega","Проклятый самурай: Омега","Маска они и разорванные доспехи; предельная форма с тяжёлой бронёй","#ff5757","#261018","#ffc15c","ad",2655,"ДРЕВНИЙ","omega"],
+["biomech_omega","Биомеханика: Омега","Живые мышцы, металл и трубки; предельная форма с тяжёлой бронёй","#d85d6f","#1b0710","#ff96a5","buy",8400,"ДРЕВНИЙ","omega"],
+["storm_omega","Повелитель бури: Омега","Молнии и электрический ореол; предельная форма с тяжёлой бронёй","#78a9ff","#071327","#d4e3ff","buy",9960,"ДРЕВНИЙ","omega"],
+["ancient_omega","Древний страж: Омега","Каменные пластины и письмена; предельная форма с тяжёлой бронёй","#b8a06c","#272014","#e9d99d","buy",11925,"БОЖЕСТВЕННЫЙ","omega"],
+["nightmare_omega","Истинный кошмар: Омега","Дополнительные глаза и живая пасть; предельная форма с тяжёлой бронёй","#ff174f","#180006","#ff5579","buy",14160,"БОЖЕСТВЕННЫЙ","omega"],
+["classic_eclipse","Классический: Затмение","Исходный облик героя; форма затмения с теневым ореолом","#9c3127","#190504","#ff281c","buy",0,"ЭПИЧЕСКИЙ","eclipse"],
+["inferno_eclipse","Инферно: Затмение","Лавовые трещины и огненное ядро; форма затмения с теневым ореолом","#ff4b16","#260200","#ff8a23","buy",630,"ЛЕГЕНДАРНЫЙ","eclipse"],
+["frost_eclipse","Ледяной кошмар: Затмение","Ледяные шипы и холодное дыхание; форма затмения с теневым ореолом","#7ce8ff","#072236","#d8fbff","buy",945,"ЛЕГЕНДАРНЫЙ","eclipse"],
+["toxic_eclipse","Токсичный мутант: Затмение","Кислотные резервуары и ядовитый туман; форма затмения с теневым ореолом","#92ff38","#122700","#c6ff5d","buy",1295,"ЛЕГЕНДАРНЫЙ","eclipse"],
+["royal_eclipse","Король кошмара: Затмение","Корона, броня и древние руны; форма затмения с теневым ореолом","#ffd45a","#3a2100","#fff0a5","buy",1837,"МИФИЧЕСКИЙ","eclipse"],
+["cyber_eclipse","Кибер-охотник: Затмение","Неоновая броня и энергетические кабели; форма затмения с теневым ореолом","#21e6ff","#06162a","#7ff5ff","buy",2397,"МИФИЧЕСКИЙ","eclipse"],
+["glitch_eclipse","Ошибка 404: Затмение","Разорванная цифровая оболочка; форма затмения с теневым ореолом","#ff43da","#061f22","#57fff1","buy",3045,"МИФИЧЕСКИЙ","eclipse"],
+["abyss_eclipse","Бездна: Затмение","Чёрная материя и живые тени; форма затмения с теневым ореолом","#9d45ff","#050008","#df5cff","buy",3955,"ДРЕВНИЙ","eclipse"],
+["bloodmoon_eclipse","Кровавая луна: Затмение","Костяная броня и багровое сияние; форма затмения с теневым ореолом","#ff354b","#250008","#ff8290","buy",5040,"ДРЕВНИЙ","eclipse"],
+["crystal_eclipse","Кристальный титан: Затмение","Гранёные пластины и кристалл в груди; форма затмения с теневым ореолом","#5ee7ff","#11204c","#a8f7ff","buy",6300,"ДРЕВНИЙ","eclipse"],
+["phantom_eclipse","Фантом: Затмение","Полупрозрачное тело и призрачный дым; форма затмения с теневым ореолом","#e5ffff","#25323a","#ffffff","ad",2485,"БОЖЕСТВЕННЫЙ","eclipse"],
+["samurai_eclipse","Проклятый самурай: Затмение","Маска они и разорванные доспехи; форма затмения с теневым ореолом","#ff5757","#261018","#ffc15c","ad",2695,"БОЖЕСТВЕННЫЙ","eclipse"],
+["biomech_eclipse","Биомеханика: Затмение","Живые мышцы, металл и трубки; форма затмения с теневым ореолом","#d85d6f","#1b0710","#ff96a5","buy",10080,"БОЖЕСТВЕННЫЙ","eclipse"],
+["storm_eclipse","Повелитель бури: Затмение","Молнии и электрический ореол; форма затмения с теневым ореолом","#78a9ff","#071327","#d4e3ff","buy",12040,"БОЖЕСТВЕННЫЙ","eclipse"],
+["ancient_eclipse","Древний страж: Затмение","Каменные пластины и письмена; форма затмения с теневым ореолом","#b8a06c","#272014","#e9d99d","buy",14525,"АБСОЛЮТНЫЙ","eclipse"],
+["nightmare_eclipse","Истинный кошмар: Затмение","Дополнительные глаза и живая пасть; форма затмения с теневым ореолом","#ff174f","#180006","#ff5579","buy",17360,"АБСОЛЮТНЫЙ","eclipse"],
+["classic_eternal","Классический: Вечный","Исходный облик героя; вечная форма с нестабильной энергией","#9c3127","#190504","#ff281c","buy",0,"ЛЕГЕНДАРНЫЙ","eternal"],
+["inferno_eternal","Инферно: Вечный","Лавовые трещины и огненное ядро; вечная форма с нестабильной энергией","#ff4b16","#260200","#ff8a23","buy",690,"МИФИЧЕСКИЙ","eternal"],
+["frost_eternal","Ледяной кошмар: Вечный","Ледяные шипы и холодное дыхание; вечная форма с нестабильной энергией","#7ce8ff","#072236","#d8fbff","buy",1035,"МИФИЧЕСКИЙ","eternal"],
+["toxic_eternal","Токсичный мутант: Вечный","Кислотные резервуары и ядовитый туман; вечная форма с нестабильной энергией","#92ff38","#122700","#c6ff5d","buy",1425,"МИФИЧЕСКИЙ","eternal"],
+["royal_eternal","Король кошмара: Вечный","Корона, броня и древние руны; вечная форма с нестабильной энергией","#ffd45a","#3a2100","#fff0a5","buy",2062,"ДРЕВНИЙ","eternal"],
+["cyber_eternal","Кибер-охотник: Вечный","Неоновая броня и энергетические кабели; вечная форма с нестабильной энергией","#21e6ff","#06162a","#7ff5ff","buy",2722,"ДРЕВНИЙ","eternal"],
+["glitch_eternal","Ошибка 404: Вечный","Разорванная цифровая оболочка; вечная форма с нестабильной энергией","#ff43da","#061f22","#57fff1","buy",3495,"ДРЕВНИЙ","eternal"],
+["abyss_eternal","Бездна: Вечный","Чёрная материя и живые тени; вечная форма с нестабильной энергией","#9d45ff","#050008","#df5cff","buy",4605,"БОЖЕСТВЕННЫЙ","eternal"],
+["bloodmoon_eternal","Кровавая луна: Вечный","Костяная броня и багровое сияние; вечная форма с нестабильной энергией","#ff354b","#250008","#ff8290","buy",5940,"БОЖЕСТВЕННЫЙ","eternal"],
+["crystal_eternal","Кристальный титан: Вечный","Гранёные пластины и кристалл в груди; вечная форма с нестабильной энергией","#5ee7ff","#11204c","#a8f7ff","buy",7500,"БОЖЕСТВЕННЫЙ","eternal"],
+["phantom_eternal","Фантом: Вечный","Полупрозрачное тело и призрачный дым; вечная форма с нестабильной энергией","#e5ffff","#25323a","#ffffff","ad",2535,"АБСОЛЮТНЫЙ","eternal"],
+["samurai_eternal","Проклятый самурай: Вечный","Маска они и разорванные доспехи; вечная форма с нестабильной энергией","#ff5757","#261018","#ffc15c","ad",2745,"АБСОЛЮТНЫЙ","eternal"],
+["biomech_eternal","Биомеханика: Вечный","Живые мышцы, металл и трубки; вечная форма с нестабильной энергией","#d85d6f","#1b0710","#ff96a5","buy",50000,"АБСОЛЮТНЫЙ","eternal"],
+["storm_eternal","Повелитель бури: Вечный","Молнии и электрический ореол; вечная форма с нестабильной энергией","#78a9ff","#071327","#d4e3ff","buy",62500,"АБСОЛЮТНЫЙ","eternal"],
+["ancient_eternal","Древний страж: Вечный","Каменные пластины и письмена; вечная форма с нестабильной энергией","#b8a06c","#272014","#e9d99d","buy",75000,"АБСОЛЮТНЫЙ","eternal"],
+["nightmare_eternal","Истинный кошмар: Вечный","Дополнительные глаза и живая пасть; вечная форма с нестабильной энергией","#ff174f","#180006","#ff5579","buy",87500,"АБСОЛЮТНЫЙ","eternal"]
+];
+const SKINS=HEROES.flatMap((h,hi)=>THEMES.map((t,ti)=>({hero:h.id,id:`${h.id}_${t[0]}`,style:t[0].split("_")[0],variant:t[9],name:`${h.name}: ${t[1]}`,short:t[1],desc:t[2],palette:{a:t[3],b:t[4],glow:t[5]},type:t[6],cost:Math.min(100000,t[7]+hi*Math.max(20,Math.floor(t[7]*.035))),rarity:t[8],design:ti,shape:ti%16,ornament:Math.floor(ti/4)%8})));
+const KEY="sn_meta_v5",PROMO="зак1989рытие";
+const defaults={shards:80,selectedHero:"red",equipped:Object.fromEntries(HEROES.map(h=>[h.id,`${h.id}_classic`])),unlocked:HEROES.map(h=>`${h.id}_classic`),promos:{},rewarded:{}};
+function load(){try{const r=JSON.parse(localStorage.getItem(KEY)||"null")||{};return {...defaults,...r,equipped:{...defaults.equipped,...(r.equipped||{})},unlocked:[...new Set([...defaults.unlocked,...(r.unlocked||[])])]}}catch{return structuredClone(defaults)}}
+let state=load(),ysdk=null,player=null;
+function save(){localStorage.setItem(KEY,JSON.stringify(state));render();}
+function toast(t){const x=document.getElementById("snToast");if(!x)return;x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),2200)}
+function getSkin(hero){return SKINS.find(s=>s.id===state.equipped[hero])||SKINS.find(s=>s.hero===hero&&s.style==="classic")}
+function portrait(s,large=false){return `<div class="skinPortrait hero-${s.hero} skin-${s.style} variant-${s.variant} shape-${s.shape} ornament-${s.ornament} rarity-${s.rarity.toLowerCase()} ${large?'large':''}" data-design="${s.design}" style="--skinA:${s.palette.a};--skinB:${s.palette.b};--skinGlow:${s.palette.glow}"><i class="pAura"></i><i class="pBack"></i><i class="pCape"></i><i class="pWings"></i><i class="pBody"><b class="pCore"></b><b class="pRibs"></b><b class="pArmor"></b></i><i class="pArm pArmL"></i><i class="pArm pArmR"></i><i class="pHead"><b class="pCrown"></b><b class="pEar pEarL"></b><b class="pEar pEarR"></b><b class="pHorn pHornL"></b><b class="pHorn pHornR"></b><b class="pEye pEyeL"></b><b class="pEye pEyeR"></b><b class="pMouth"></b><b class="pCrack"></b></i><i class="pTail"></i><i class="pParticles"></i><i class="pLightning"></i></div>`}
+function renderHeroes(){const el=document.getElementById("snHeroGrid");if(!el)return;el.innerHTML=HEROES.map(h=>{const s=getSkin(h.id);return `<button class="snHero ${state.selectedHero===h.id?'active':''}" data-hero="${h.id}">${portrait(s)}<span><b>${h.name}</b><small>${h.kind}</small></span></button>`}).join("");el.querySelectorAll(".snHero").forEach(b=>b.onclick=()=>{state.selectedHero=b.dataset.hero;save()})}
+function card(s){const owned=state.unlocked.includes(s.id),eq=state.equipped[s.hero]===s.id;return `<article class="snCard ${owned?'owned':'locked'} ${eq?'equipped':''}" data-id="${s.id}">${portrait(s)}<div class="snMeta"><span class="snRarity">${s.rarity}</span><h3>${s.short}</h3><p>${s.desc}</p></div><button class="snAction ${s.type}" ${eq?'disabled':''}>${eq?'ВЫБРАН':owned?'ВЫБРАТЬ':s.type==='ad'?'📺 ОТКРЫТЬ ЗА РЕКЛАМУ':`КУПИТЬ — ${s.cost} 🌑`}</button></article>`}
+let skinSearch="",skinRarity="ВСЕ",skinSort="price";
+function renderSkins(){const el=document.getElementById("snSkinGrid");if(!el)return;let list=SKINS.filter(s=>s.hero===state.selectedHero);if(skinSearch)list=list.filter(s=>(s.name+" "+s.desc).toLowerCase().includes(skinSearch));if(skinRarity!=="ВСЕ")list=list.filter(s=>s.rarity===skinRarity);list.sort((a,b)=>skinSort==="name"?a.short.localeCompare(b.short,"ru"):skinSort==="rarity"?a.rarity.localeCompare(b.rarity,"ru"):a.cost-b.cost);el.innerHTML=list.map(card).join("");el.querySelectorAll(".snCard").forEach(c=>c.querySelector("button").onclick=()=>useSkin(SKINS.find(s=>s.id===c.dataset.id)))}
+function useSkin(s){if(state.unlocked.includes(s.id)){state.equipped[s.hero]=s.id;save();toast("Выбран: "+s.short);return}if(s.type==='ad'){rewarded(s);return}if(state.shards<s.cost){toast("Не хватает осколков");return}state.shards-=s.cost;state.unlocked.push(s.id);state.equipped[s.hero]=s.id;save();toast("Открыт: "+s.short)}
+function rewarded(s){if(!ysdk?.adv?.showRewardedVideo){state.unlocked.push(s.id);state.equipped[s.hero]=s.id;save();toast("Тестовый режим: скин открыт");return}let ok=false;ysdk.adv.showRewardedVideo({callbacks:{onRewarded:()=>{ok=true;state.unlocked.push(s.id);state.equipped[s.hero]=s.id;save();toast("Скин открыт")},onClose:()=>{if(!ok)toast("Досмотри рекламу")},onError:()=>toast("Реклама недоступна")}})}
+function promo(){const i=document.getElementById("snPromoInput"),m=document.getElementById("snPromoMsg"),v=i.value.trim().toLowerCase();if(v!==PROMO){m.textContent="Неверный промокод";return}if(state.promos[v]){m.textContent="Уже использован";return}state.promos[v]=1;state.shards+=50;save();m.textContent="Получено 50 осколков!"}
+const QKEY="sn_night_quests_v3";
+const QUEST_POOL=[
+["cam","Открыть камеры",n=>5+n*2],["light","Использовать фонарь",n=>8+n*3],["mask","Надеть маску",n=>3+n],["defense","Отразить угрозу",n=>4+n],
+["cameraTime","Провести секунд на камерах",n=>20+n*8],["flashTime","Держать фонарь включённым секунд",n=>15+n*6],["switchCam","Переключить камеры",n=>8+n*3],
+["survive","Продержаться секунд",n=>90+n*30],["noPower","Сохранить энергии к 4:00 не меньше",n=>Math.max(10,45-n*3)],["closeCam","Закрыть планшет",n=>4+n],
+["maskQuick","Быстро надеть маску при угрозе",n=>2+Math.ceil(n/2)],["vent","Проверить вентиляцию",n=>3+n],["streak","Сделать действий без ошибки",n=>12+n*2],
+["danger","Пережить опасные атаки",n=>2+Math.floor(n/2)],["hour","Дожить до игрового часа",n=>Math.min(6,3+Math.ceil(n/2))],["calm","Не открывать камеры секунд",n=>15+n*3],
+["fastCam","Открыть и закрыть камеры быстро",n=>3+n],["combo","Комбо защиты",n=>2+Math.floor(n/2)],["listen","Пережить секунд без фонаря",n=>25+n*4],
+["perfect","Идеально отразить атаку",n=>1+Math.floor(n/3)],["resource","Сэкономить единиц энергии",n=>10+n*2],["nightWin","Закончить ночь",n=>1],
+["allCams","Посетить разные камеры",n=>Math.min(10,4+n)],["panic","Пережить режим тревоги",n=>1+Math.floor(n/3)]
+];
+let q={night:0,stats:{},paid:false,selected:[]};
+function qload(){try{const r=JSON.parse(localStorage.getItem(QKEY)||"{}");q={...q,...r,stats:{...(q.stats||{}),...(r.stats||{})}}}catch(e){}}
+function qsave(){localStorage.setItem(QKEY,JSON.stringify(q));renderQuests()}
+function currentN(){try{return Number(typeof currentNight!=="undefined"?currentNight:1)||1}catch(e){return 1}}
+function gameActive(){try{return typeof gameStarted!=="undefined"&&gameStarted&&!paused}catch(e){return false}}
+function pickQuests(n){return Array.from({length:10},(_,i)=>(n*7+i*5)%QUEST_POOL.length)}
+function resetQ(){const n=currentN();q={night:n,stats:{},paid:false,selected:pickQuests(n)};qsave()}
+function qitems(){const n=currentN();if(!q.selected?.length)q.selected=pickQuests(n);return q.selected.map(i=>{const d=QUEST_POOL[i],target=d[2](n),value=q.stats[d[0]]||0;return [`${d[1]} — ${target}`,value>=target,`${Math.min(Math.floor(value),target)}/${target}`,d[0]]})}
+function questReward(){return 100+currentN()*75}
+function renderQuests(){const el=document.getElementById("snQuestList");if(!el)return;const n=currentN();const items=qitems();el.innerHTML=`<h3>НОЧЬ ${n}: 10 ЗАДАНИЙ ИЗ 24</h3>${items.map(x=>`<div class="snQuest ${x[1]?"done":""}"><span>${x[1]?"✓":"○"} ${x[0]}</span><b>${x[2]}</b></div>`).join("")}<div class="snQuestReward">${q.paid?"НАГРАДА ПОЛУЧЕНА":`Выполни все 10: +${questReward()} осколков кошмара`}</div>`}
+function rewardQ(){if(q.paid||!qitems().every(x=>x[1]))return;q.paid=true;state.shards+=questReward();save();qsave();toast(`Все задания выполнены! +${questReward()} осколков`)}
+function qadd(key,v=1){if(!gameActive())return;if(q.night!==currentN())resetQ();q.stats[key]=(q.stats[key]||0)+v;qsave();rewardQ()}
+function render(){renderHeroes();renderSkins();renderQuests();document.querySelectorAll("[data-sn-balance]").forEach(x=>x.textContent=state.shards);const h=HEROES.find(x=>x.id===state.selectedHero),s=getSkin(h.id),stage=document.getElementById("snStage");if(stage)stage.innerHTML=`${portrait(s,true)}<div><small>${h.kind}</small><h2>${h.name}</h2><p>${h.desc}</p><b>${s.short}</b></div>`}
+function build(){const hub=document.createElement("section");hub.id="snHub";hub.innerHTML=`<div class="snPanel"><header class="snHead"><div><small>КОЛЛЕКЦИЯ ИЗ 512 ОБЛИКОВ</small><h1>АРСЕНАЛ КОШМАРА</h1></div><button class="snClose">×</button></header><div class="snBalance">🌑 Осколки кошмара: <b data-sn-balance></b></div><div id="snStage" class="snStage"></div><div id="snHeroGrid" class="snHeroGrid"></div><nav class="snTabs"><button class="snTab active" data-page="skins">СКИНЫ</button><button class="snTab" data-page="quests">ЗАДАНИЯ НОЧИ</button><button class="snTab" data-page="promo">ПРОМОКОД</button></nav><div id="snPage-skins" class="snPage active"><div class="snFilters"><input id="snSearch" placeholder="Поиск скина"><select id="snRarity"><option>ВСЕ</option><option>ОБЫЧНЫЙ</option><option>РЕДКИЙ</option><option>ЭПИЧЕСКИЙ</option><option>ЛЕГЕНДАРНЫЙ</option><option>МИФИЧЕСКИЙ</option><option>ДРЕВНИЙ</option><option>БОЖЕСТВЕННЫЙ</option><option>АБСОЛЮТНЫЙ</option></select><select id="snSort"><option value="price">По цене</option><option value="name">По имени</option><option value="rarity">По редкости</option></select></div><div id="snSkinGrid" class="snGrid"></div></div><div id="snPage-quests" class="snPage"><div id="snQuestList" class="snQuestBox"></div></div><div id="snPage-promo" class="snPage"><div class="snPromoBox"><h3>СЕКРЕТНЫЙ ПРОМОКОД</h3><input id="snPromoInput" placeholder="Введите код"><button id="snPromoActivate">АКТИВИРОВАТЬ</button><div id="snPromoMsg"></div></div></div></div>`;document.body.append(hub);const t=document.createElement("div");t.id="snToast";document.body.append(t);hub.querySelector('.snClose').onclick=()=>hub.classList.remove('active');hub.querySelectorAll('.snTab').forEach(b=>b.onclick=()=>{hub.querySelectorAll('.snTab,.snPage').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById('snPage-'+b.dataset.page).classList.add('active')});document.getElementById('snPromoActivate').onclick=promo;document.getElementById('snSearch').oninput=e=>{skinSearch=e.target.value.trim().toLowerCase();renderSkins()};document.getElementById('snRarity').onchange=e=>{skinRarity=e.target.value;renderSkins()};document.getElementById('snSort').onchange=e=>{skinSort=e.target.value;renderSkins()};const nav=document.querySelector('.mainMenuNav');if(nav){let b=document.getElementById('snShopButton');if(!b){b=document.createElement('button');b.id='snShopButton';b.className='menuButton';b.innerHTML='<b>СКИНЫ</b><small>512 обликов, фильтры и задания</small>';nav.insertBefore(b,document.getElementById('settingsButton')||null)}b.onclick=()=>{render();hub.classList.add('active')}}render()}
+async function initYandex(){try{if(!window.YaGames)return;ysdk=await YaGames.init();player=await ysdk.getPlayer();ysdk.features.LoadingAPI?.ready()}catch(e){console.warn(e)}}
+qload();
+document.addEventListener("click",e=>{
+ if(!gameActive())return;
+ if(e.target.closest("#cameraButton"))qadd("cam");
+ if(e.target.closest(".camButton")){qadd("switchCam");qadd("allCams")}
+ if(e.target.closest("#closeCamera"))qadd("closeCam");
+ if(e.target.closest("#flashButton"))qadd("light");
+ if(e.target.closest("#maskButton"))qadd("mask");
+ if(e.target.closest("#windButton,#cameraRepairButton"))qadd("defense");
+});
+setInterval(()=>{
+ if(gameActive()){qadd("survive",2);try{if(typeof cameraOpen!=="undefined"&&cameraOpen)qadd("cameraTime",2);if(typeof flashlightOn!=="undefined"&&flashlightOn)qadd("flashTime",2)}catch(e){}}
+},2000);
+setTimeout(()=>{
+ try{
+  if(typeof startGame==="function"){
+   const originalStart=startGame;
+   startGame=function(){if(q.night!==currentN()||q.paid)resetQ();else resetQ();return originalStart.apply(this,arguments)};
+  }
+  if(typeof repelFlash==="function"){
+   const originalRepel=repelFlash;
+   repelFlash=function(){const before=(typeof enemies!=="undefined"?enemies.filter(e=>e.location==="office").length:0);const r=originalRepel.apply(this,arguments);setTimeout(()=>{try{const after=enemies.filter(e=>e.location==="office").length;if(after<before){qadd("defense")}}catch(e){}},1000);return r};
+  }
+ }catch(e){console.warn("Quest hooks",e)}
+},0);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{build();initYandex()});else{build();initYandex()}
+window.ScaryNightShop={getSkin,state,open:()=>document.getElementById('snHub')?.classList.add('active')};
+})();
